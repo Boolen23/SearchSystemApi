@@ -8,7 +8,7 @@ namespace SearchSystemApi.Model.Stat
     public interface IStatisticsCollector
     {
         void Collect(ExternalSystem system, ResponseStatus status, int WaitTime);
-        IEnumerable<SystemExecutionMetric> GetMetrics();
+        IEnumerable<string> GetMetrics();
         IEnumerable<string> SearchResult();
     }
 }

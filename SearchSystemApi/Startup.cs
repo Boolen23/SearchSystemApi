@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.OpenApi.Models;
 using SearchSystemApi.Model.Stat;
 using System;
 using System.Collections.Generic;
@@ -27,6 +28,10 @@ namespace SearchSystemApi
         {
             services.AddControllers();
             services.AddScoped<IStatisticsCollector, StatisticsCollector>();
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Search API", Version = "v1" });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -41,6 +46,15 @@ namespace SearchSystemApi
 
             app.UseAuthorization();
 
+            app.UseSwagger(c =>
+            {
+                c.RouteTemplate = "Search/swagger/{documentname}/swagger.json";
+            });
+            app.UseSwaggerUI(opt =>
+            {
+                opt.SwaggerEndpoint("/Search/swagger/v1/swagger.json", "Search API V1");
+                opt.RoutePrefix = "Search/swagger";
+            });
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
