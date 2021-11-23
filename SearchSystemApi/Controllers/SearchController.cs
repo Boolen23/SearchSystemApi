@@ -20,6 +20,13 @@ namespace SearchSystemApi.Controllers
         [HttpGet("Metrics")]
         public IActionResult Metrics() => Json(StatisticsCollector.GetMetrics());
 
+        /// <summary>
+        /// Запуск поиска. Значения указываются в миллисекундах!
+        /// </summary>
+        /// <param name="Wait"></param>
+        /// <param name="RandomMin"></param>
+        /// <param name="RandomMax"></param>
+        /// <returns></returns>
         [HttpGet("Search")]
         public async Task<IActionResult> Search(int Wait, int RandomMin, int RandomMax)
         {
